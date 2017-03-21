@@ -51,9 +51,19 @@ var languageStrings = {
     }
 };
 
+// Create default handlers
+var newSessionHandlers = {
+    'LaunchRequest': function () {
+        //Skill was launched
+
+        //Say Hello!
+        this.emit(':tell', "Hello Naveen");
+    }
+};
+
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
-
+    
     API_KEY = event.analytics_api_key;
     /* default parameter for the action */
     ANALYTICS_COMPANY = event.analytics_company;
@@ -69,6 +79,8 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
+                
+                alexaSDK.registerHandlers(newSessionHandlers);
 
                 return alexaSDK.execute();
             } catch (err) {
